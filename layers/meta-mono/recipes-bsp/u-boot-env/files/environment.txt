@@ -1,0 +1,3 @@
+# Default U-Boot environment for Gateway Development Kit (LS1046A)
+bootdelay=3
+baudrate=115200

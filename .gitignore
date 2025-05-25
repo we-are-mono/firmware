@@ -1,0 +1,23 @@
+# External sources (managed by kas)
+sources/
+
+# Build artifacts
+build/
+downloads/
+sstate-cache/
+cache/
+
+# Editor files
+.vscode
+
+# Temporary files
+*.pyc
+*.pyo
+.DS_Store
+*~
+
+# kas container artifacts
+.kas-container-*
+
+# Local dev environment configuration
+site.conf
