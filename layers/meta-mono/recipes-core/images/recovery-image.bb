@@ -6,7 +6,7 @@ inherit image
 # Keep it minimal - just BusyBox and essential packages that should be
 # sufficient for a rescue system; Basic networking, partitioning and compression.
 IMAGE_INSTALL = "busybox base-files parted e2fsprogs-mke2fs \
-                mtd-utils kmod util-linux-fdisk dropbear shadow \
+                mtd-utils kmod util-linux-fdisk dropbear shadow watchdog \
                 wget curl tftp-hpa gzip bzip2 unzip \
                 udev udev-rules-qoriq"
 
