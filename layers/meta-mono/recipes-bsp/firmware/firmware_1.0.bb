@@ -32,7 +32,7 @@ KERNEL_OFFSET = "10485760"
 COMPONENT_FILES = " \
     bl2:${DEPLOY_DIR_IMAGE}/bl2_${BOOTTYPE}.pbl:${BL2_OFFSET} \
     fip:${DEPLOY_DIR_IMAGE}/fip.bin:${FIP_OFFSET} \
-    env:${DEPLOY_DIR_IMAGE}/uboot-env.bin:${ENV_OFFSET} \
+    env:${DEPLOY_DIR_IMAGE}/u-boot-env.bin:${ENV_OFFSET} \
     fman:${DEPLOY_DIR_IMAGE}/fman-ucode.bin:${FMAN_OFFSET} \
     dtb:${DEPLOY_DIR_IMAGE}/mono-gateway-dk.dtb:${DTB_OFFSET} \
     kernel:${DEPLOY_DIR_IMAGE}/Image.gz-initramfs-gateway-dk.bin:${KERNEL_OFFSET}"

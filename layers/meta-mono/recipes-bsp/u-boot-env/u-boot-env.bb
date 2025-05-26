@@ -16,16 +16,16 @@ S = "${WORKDIR}/${BP}"
 COMPATIBLE_MACHINE = "gateway-dk"
 
 # Environment size - typically 64KB or 128KB for NOR flash
-ENV_SIZE = "0x10000"
+ENV_SIZE = "0x2000"
 
 do_compile() {
-    mkenvimage -s ${ENV_SIZE} -o uboot-env.bin ${UNPACKDIR}/environment.txt
+    mkenvimage -s ${ENV_SIZE} -o u-boot-env.bin ${UNPACKDIR}/environment.txt
 }
 
 do_deploy() {
     install -d ${DEPLOYDIR}
-    install -m 644 uboot-env.bin ${DEPLOYDIR}/uboot-env-${MACHINE}.bin
-    ln -sf uboot-env-${MACHINE}.bin ${DEPLOYDIR}/uboot-env.bin
+    install -m 644 u-boot-env.bin ${DEPLOYDIR}/u-boot-env-${MACHINE}.bin
+    ln -sf u-boot-env-${MACHINE}.bin ${DEPLOYDIR}/u-boot-env.bin
 }
 
 addtask deploy after do_compile before do_build
