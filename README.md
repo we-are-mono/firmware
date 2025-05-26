@@ -6,9 +6,9 @@ TODO: Put an intro here that will make people believe this is the best Yocto pro
 
 After you clone this repository, make sure you have [kas](https://github.com/siemens/kas) instaled - the best option to do so is to use [pipx](https://pipx.pypa.io/stable/installation/).
 
-Also, don't forget to copy the `site.conf.example` example to `site.conf` and edit it to suit your environment.
+Also, don't forget to copy the `site.conf.example` to `site.conf` and edit it to suit your environment.
 
-Once you have it installed, simply run `$ kas shell kas/gateway-dk.yml -c "bitbake firmware"`
+Once you have it installed, simply run `$ kas build kas/gateway-dk.yml` and once it's done building (it may take hours on the first attempt!), you can find everything in `build/tmp/deploy/images/gateway-dk/`.
 
 If you want to test it locally, make sure you have [qemu](https://www.qemu.org/) installed, then run:
 

@@ -3,7 +3,7 @@ header:
   version: 11
 
 machine: gateway-dk
-distro: nodistro
+distro: recovery
 
 repos:
   openembedded-core:
@@ -40,7 +40,8 @@ local_conf_header:
 
 # What to build
 target:
-  - mono-image
+  - recovery-image
+  - linux-mono
   - rcw
   - u-boot
   - u-boot-env

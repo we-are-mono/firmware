@@ -19,8 +19,8 @@ SRC_URI += "file://mono-gateway-dk.dts"
 SRC_URI += "file://mono-gateway-dk-sdk.dts"
 
 # Force initramfs integration into the kernel
-INITRAMFS_IMAGE = "mono-image"
-INITRAMFS_IMAGE_NAME = "mono-image.rootfs"
+INITRAMFS_IMAGE = "recovery-image"
+INITRAMFS_IMAGE_NAME = "recovery-image.rootfs"
 INITRAMFS_IMAGE_BUNDLE = "1"
 
 KERNEL_DEVICETREE = "freescale/mono-gateway-dk.dtb"
