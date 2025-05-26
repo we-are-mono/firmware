@@ -5,9 +5,7 @@ LICENSE = "MIT"
 
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 
-# Depend on all firmware components
-DEPENDS += "atf u-boot-env fman-ucode"
-DEPENDS += "linux-mono"
+DEPENDS += "atf u-boot-env fman-ucode linux-mono"
 
 inherit deploy
 
@@ -60,14 +58,8 @@ do_compile() {
 
 do_deploy() {
     install -d ${DEPLOYDIR}
-    
-    # Deploy the firmware image
     install -m 644 ${S}/firmware-${BOOTTYPE}.bin ${DEPLOYDIR}/
-    
-    # Create convenience symlink
     ln -sf firmware-${BOOTTYPE}.bin ${DEPLOYDIR}/firmware.bin
-    
-    echo "Firmware deployed: ${DEPLOYDIR}/firmware-${BOOTTYPE}.bin"
 }
 
 addtask deploy after do_compile before do_build

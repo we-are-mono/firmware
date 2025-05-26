@@ -36,11 +36,7 @@ do_compile () {
 
 do_deploy () {
     install -d ${DEPLOYDIR}
-    
-    # Deploy U-Boot binary
     install -m 644 ${S}/${UBOOT_BINARY} ${DEPLOYDIR}/u-boot-${MACHINE}.bin
-    
-    # Create symlink for ATF to find
     ln -sf u-boot-${MACHINE}.bin ${DEPLOYDIR}/u-boot.bin
 }
 

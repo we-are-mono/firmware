@@ -1,7 +1,7 @@
 SUMMARY = "Frame Manager Microcode for LS1046A"
 SECTION = "bootloaders"
-# TODO: Change the license to a correct one
-LICENSE = "CLOSED"
+LICENSE = "Proprietary"
+LIC_FILES_CHKSUM = "file://NXP-Binary-EULA.txt;md5=12e248d404ce1ea8bed0148fcf127e69"
 
 inherit deploy
 
@@ -13,16 +13,11 @@ S = "${WORKDIR}/git"
 
 COMPATIBLE_MACHINE = "gateway-dk"
 
-# LS1046A uses specific FMAN microcode
 FMAN_UCODE_FILE = "fsl_fman_ucode_ls1046_r1.0_108_4_9.bin"
 
 do_deploy() {
     install -d ${DEPLOYDIR}
-    
-    # Deploy with a consistent name
     install -m 644 ${S}/${FMAN_UCODE_FILE} ${DEPLOYDIR}/fman-ucode-${MACHINE}.bin
-    
-    # Create symlink for easier reference
     ln -sf fman-ucode-${MACHINE}.bin ${DEPLOYDIR}/fman-ucode.bin
 }
 

@@ -8,20 +8,16 @@ DEPENDS += "openssl openssl-native"
 DEPENDS += "rcw u-boot"
 do_compile[depends] += "u-boot:do_deploy rcw:do_deploy"
 
-# ATF source
-SRC_URI = "git://github.com/we-are-mono/atf.git;protocol=https;branch=mono-development"
-SRCREV = "270f20bdd33522d343b1c38a0a2fd165a8a0a16f"
-
-# Add proper version handling
 ATF_VERSION ?= "2.6"
 PV = "${ATF_VERSION}+git${SRCPV}"
 
+SRC_URI = "git://github.com/we-are-mono/atf.git;protocol=https;branch=mono-development"
+SRCREV = "270f20bdd33522d343b1c38a0a2fd165a8a0a16f"
+
 S = "${WORKDIR}/git"
 
-# Machine compatibility  
 COMPATIBLE_MACHINE = "gateway-dk"
 
-# ATF build parameters for LS1046A
 ATF_PLATFORM = "gateway_dk"
 ATF_UBOOT_FILE = "${DEPLOY_DIR_IMAGE}/u-boot.bin"
 

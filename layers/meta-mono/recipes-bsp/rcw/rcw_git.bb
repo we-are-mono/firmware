@@ -8,7 +8,6 @@ DEPENDS += "tcl-native"
 
 inherit deploy
 
-# Use your custom RCW repository
 SRC_URI = "git://github.com/we-are-mono/rcw.git;protocol=https;branch=mono-development"
 SRCREV = "${AUTOREV}"
 
@@ -16,10 +15,9 @@ S = "${WORKDIR}/git"
 
 export PYTHON = "${USRBINPATH}/python3"
 
-# Machine compatibility
 COMPATIBLE_MACHINE = "gateway-dk"
 
-# We only have one device at the moment
+# Directory name in the RCW repository
 BOARD_TARGETS = "gateway_dk"
 
 do_compile () {

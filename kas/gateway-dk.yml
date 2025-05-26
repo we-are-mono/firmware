@@ -6,7 +6,6 @@ machine: gateway-dk
 distro: nodistro
 
 repos:
-  # Core Yocto layer and bitbake
   openembedded-core:
     url: https://git.openembedded.org/openembedded-core
     branch: styhead
@@ -14,7 +13,6 @@ repos:
     layers:
       meta:
 
-  # Bitbake build tool
   bitbake:
     url: https://git.openembedded.org/bitbake
     branch: "2.10"
@@ -22,18 +20,16 @@ repos:
     layers:
       .: "excluded"
 
-  # Essential OE layers for basic functionality
   meta-openembedded:
     url: https://git.openembedded.org/meta-openembedded
     branch: styhead
     path: sources/meta-openembedded
     layers:
-      meta-oe:          # Core OpenEmbedded recipes
-      meta-filesystems: # Filesystem utilities (e2fsprogs)
+      meta-oe:
+      meta-filesystems:
       meta-networking:  # Dependency for meta-filesystems
       meta-python:      # Dependency for meta-filesystems
 
-  # Your custom layer
   meta-mono:
     path: layers/meta-mono
 
@@ -50,3 +46,4 @@ target:
   - u-boot-env
   - fman-ucode
   - atf
+  - firmware

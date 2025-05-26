@@ -19,15 +19,12 @@ COMPATIBLE_MACHINE = "gateway-dk"
 ENV_SIZE = "0x10000"
 
 do_compile() {
-    # Create U-Boot environment binary from text file
     mkenvimage -s ${ENV_SIZE} -o uboot-env.bin ${UNPACKDIR}/environment.txt
 }
 
 do_deploy() {
     install -d ${DEPLOYDIR}
     install -m 644 uboot-env.bin ${DEPLOYDIR}/uboot-env-${MACHINE}.bin
-    
-    # Create symlink for easier reference
     ln -sf uboot-env-${MACHINE}.bin ${DEPLOYDIR}/uboot-env.bin
 }
 

@@ -1,10 +1,10 @@
 SUMMARY = "Minimal BusyBox initramfs for Gateway Development Kit"
-DESCRIPTION = "Initramfs-only image with BusyBox utilities"
 
-# Inherit initramfs image class instead of core-image
+# Inherit initramfs image class (leaner) instead of core-image
 inherit image
 
-# Keep it minimal - just BusyBox and essential packages
+# Keep it minimal - just BusyBox and essential packages that should be
+# sufficient for a rescue system; Basic networking, partitioning and compression.
 IMAGE_INSTALL = "busybox base-files parted e2fsprogs-mke2fs \
                 mtd-utils kmod util-linux-fdisk dropbear shadow \
                 wget curl tftp-hpa gzip bzip2 unzip"
@@ -20,3 +20,6 @@ IMAGE_FEATURES:remove = "package-management"
 
 # We want compressed version of initramfs
 IMAGE_FSTYPES = "cpio.gz"
+
+# Optional, but if we don't set it, it has machine in the name by default
+IMAGE_NAME = "${IMAGE_BASENAME}${IMAGE_NAME_SUFFIX}"
