@@ -8,6 +8,8 @@ DEPENDS += "openssl openssl-native"
 DEPENDS += "rcw u-boot"
 do_compile[depends] += "u-boot:do_deploy rcw:do_deploy"
 
+inherit deploy
+
 ATF_VERSION ?= "2.6"
 PV = "${ATF_VERSION}+git${SRCPV}"
 
@@ -38,24 +40,23 @@ LD[unexport] = "1"
 EXTRA_OEMAKE += "HOSTCC='${BUILD_CC} ${BUILD_CPPFLAGS} ${BUILD_CFLAGS} ${BUILD_LDFLAGS}'"
 
 do_compile () {
-    ATF_RCW_FILE="${DEPLOY_DIR_IMAGE}/rcw_1600_${BOOTTYPE}boot.bin"
+    ATF_RCW_FILE="${DEPLOY_DIR_IMAGE}/rcw_2100_${BOOTTYPE}boot.bin"
 
     oe_runmake distclean
 
     oe_runmake PLAT=${ATF_PLATFORM} \
-                BOOT_MODE=${BOOTTYPE} \
-                RCW=${ATF_RCW_FILE} \
-                BL33=${ATF_UBOOT_FILE} \
-                pbl fip
+               BOOT_MODE=${BOOTTYPE} \
+               RCW=${ATF_RCW_FILE} \
+               BL33=${ATF_UBOOT_FILE} \
+               pbl fip
+}
 
-    # These normally belong to do_install, but we're building several
-    # different images and each overwrites the previous one, which we
-    # need to avoid, so we copy it over before that happens
+do_deploy () {
     install -m 644 build/${ATF_PLATFORM}/release/bl2_${BOOTTYPE}.pbl \
-                    ${DEPLOY_DIR_IMAGE}/
+                   ${DEPLOY_DIR_IMAGE}/
 
     install -m 644 build/${ATF_PLATFORM}/release/fip.bin \
-                    ${DEPLOY_DIR_IMAGE}/
-    
-
+                   ${DEPLOY_DIR_IMAGE}/
 }
+
+addtask deploy after do_compile

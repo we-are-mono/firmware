@@ -43,11 +43,11 @@ The very first thing NXP QoriIQ family of CPUs need to access while booting is t
 
 Next, we have BL3, part of which is u-boot, and just like the RCW, it gets bundled in ATF, this time in BL3 and placed at a 1 MB offset (`0x100000` in hex).
 
-Because Bl3 ends up around 1 MB in size, we give it 2 MB, just to make sure to have enough buffer and there's no overlap with u-boot environment, which then gets placed at 3 MB offset (`0x300000` in hex).
+Because BL3 ends up around 1 MB in size, we give it 2 MB, just to make sure to have enough buffer and there's no overlap with u-boot environment, which then gets placed at 3 MB offset (`0x300000` in hex).
 
 Frame manager gets placed at 4 MB offset and is a binary that's provided by [NXP](https://github.com/nxp-qoriq/qoriq-fm-ucode). This microcode is necessary because the CPU supports Hardware Offloading of networking and will not work without it.
 
 We also have a Linux recovery system as part of the firmware image, and we need two components for it to work properly: a) a device tree, which is placed at 5 MB offset (`0x500000` in hex) and b) a kernel, which is placed at 10 MB offset (`0xA00000` in hex). Why 10 MB? Because the kernel image also includes a basic recovery *initramfs* and combined, they amount to ~19 MB. Since we're aiming at 32 MB firmware image, placing it at 10 MB makes it easier organizationally as well as leaves some buffer towards the end of the image in case we need to add something crucial to either the kernel or initramfs.
 
-This does indeed leave a 4 MB gap between the device tree and the kernel image, and that's fine, we can find other uses for it in the future or leave it empty.
+This does indeed leave a 4 MB gap between the device tree and the kernel image, and that's fine, we can find other uses for it (UEFI maybe?) in the future or leave it empty.
 
