@@ -8,9 +8,9 @@ DEPENDS += "libgcc virtual/${TARGET_PREFIX}gcc flex-native bison-native dtc-nati
 
 inherit deploy
 
+PV = "lf_v2024.04+git${SRCPV}"
 SRC_URI = "git://github.com/we-are-mono/u-boot.git;protocol=https;branch=mono-development"
-SRCREV = "${AUTOREV}"
-
+SRCREV = "32c730df0886c766c0b0fbda3a15196069f5fb31"
 S = "${WORKDIR}/git"
 
 COMPATIBLE_MACHINE = "gateway-dk"

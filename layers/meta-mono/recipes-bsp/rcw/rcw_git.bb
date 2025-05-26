@@ -10,7 +10,6 @@ inherit deploy
 
 SRC_URI = "git://github.com/we-are-mono/rcw.git;protocol=https;branch=mono-development"
 SRCREV = "7dc6ed1e7e9cb2f3ed5c0c74a217370f5e09539b"
-
 S = "${WORKDIR}/git"
 
 export PYTHON = "${USRBINPATH}/python3"

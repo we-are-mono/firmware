@@ -12,10 +12,8 @@ inherit deploy
 
 ATF_VERSION ?= "2.6"
 PV = "${ATF_VERSION}+git${SRCPV}"
-
 SRC_URI = "git://github.com/we-are-mono/atf.git;protocol=https;branch=mono-development"
 SRCREV = "270f20bdd33522d343b1c38a0a2fd165a8a0a16f"
-
 S = "${WORKDIR}/git"
 
 COMPATIBLE_MACHINE = "gateway-dk"
