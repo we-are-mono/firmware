@@ -16,8 +16,10 @@ cache/
 .DS_Store
 *~
 
-# kas container artifacts
+# kas artifacts
 .kas-container-*
+.kas_shell_history
 
 # Local dev environment configuration
 site.conf
+NOTES.md

@@ -6,6 +6,10 @@ LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 
 DEPENDS += "atf u-boot-env fman-ucode linux-mono"
+do_compile[depends] += "atf:do_deploy"
+do_compile[depends] += "u-boot-env:do_deploy"
+do_compile[depends] += "fman-ucode:do_deploy"
+do_compile[depends] += "linux-mono:do_deploy"
 
 inherit deploy
 

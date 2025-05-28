@@ -1,0 +1,24 @@
+
+header:
+  version: 11
+  includes:
+    - kas/common.yaml
+
+machine: gateway-dk
+distro: recovery
+
+# Include site configuration
+local_conf_header:
+  site-config: |
+    require ${TOPDIR}/../site.conf
+
+# What to build
+target:
+  - recovery-image
+  - linux-mono
+  - rcw
+  - u-boot
+  - u-boot-env
+  - fman-ucode
+  - atf
+  - firmware
