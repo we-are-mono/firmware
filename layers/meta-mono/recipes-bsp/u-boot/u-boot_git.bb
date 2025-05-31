@@ -1,43 +1,26 @@
-SUMMARY = "U-Boot for Gateway Development Kit (LS1046A)"
-SECTION = "bootloaders"
-LICENSE = "GPL-2.0-or-later"
+require recipes-bsp/u-boot/u-boot-common.inc
+require recipes-bsp/u-boot/u-boot.inc
 
-LIC_FILES_CHKSUM = "file://Licenses/README;md5=2ca5f2c35c8cc335f0a19756634782f1"
+DEPENDS += "u-boot-tools-native"
 
-DEPENDS += "libgcc virtual/${TARGET_PREFIX}gcc flex-native bison-native dtc-native"
-
-inherit deploy
-
-PV = "lf_v2024.04+git${SRCPV}"
 SRC_URI = "git://github.com/we-are-mono/u-boot.git;protocol=https;branch=mono-development"
 SRCREV = "32c730df0886c766c0b0fbda3a15196069f5fb31"
-S = "${WORKDIR}/git"
-
-COMPATIBLE_MACHINE = "gateway-dk"
 
 # U-Boot configuration
-UBOOT_CONFIG = "mono_gateway_dk_defconfig"
-UBOOT_BINARY = "u-boot.bin"
+UBOOT_MACHINE = "mono_gateway_dk_defconfig"
 
-WRAP_TARGET_PREFIX ?= "${TARGET_PREFIX}"
-EXTRA_OEMAKE = 'CROSS_COMPILE=${WRAP_TARGET_PREFIX} LD="${WRAP_TARGET_PREFIX}ld"'
-EXTRA_OEMAKE += 'CC="${WRAP_TARGET_PREFIX}gcc ${TOOLCHAIN_OPTIONS}"'
-EXTRA_OEMAKE += 'HOSTCC="${BUILD_CC} ${BUILD_CFLAGS} ${BUILD_LDFLAGS}"'
-EXTRA_OEMAKE += 'STAGING_INCDIR=${STAGING_INCDIR_NATIVE}'
-EXTRA_OEMAKE += 'STAGING_LIBDIR=${STAGING_LIBDIR_NATIVE} V=1'
+# Environment size - typically 64KB or 128KB for NOR flash
+ENV_SIZE = "0x2000"
+SRC_URI += "file://environment.txt"
 
-do_configure () {
-    oe_runmake ${UBOOT_CONFIG}
+do_compile:append () {
+    mkenvimage -s ${ENV_SIZE} -o ${B}/u-boot-env.bin ${UNPACKDIR}/environment.txt
 }
 
-do_compile () {
-    oe_runmake
-}
-
-do_deploy () {
+do_deploy:append () {
     install -d ${DEPLOYDIR}
-    install -m 644 ${S}/${UBOOT_BINARY} ${DEPLOYDIR}/u-boot-${MACHINE}.bin
-    ln -sf u-boot-${MACHINE}.bin ${DEPLOYDIR}/u-boot.bin
+    install -m 644 ${B}/u-boot-env.bin ${DEPLOYDIR}/u-boot-env-${MACHINE}.bin
+    ln -sf u-boot-env-${MACHINE}.bin ${DEPLOYDIR}/u-boot-env.bin
 }
 
 addtask deploy after do_compile before do_build

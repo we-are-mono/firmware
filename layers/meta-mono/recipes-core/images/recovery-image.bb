@@ -11,7 +11,7 @@ IMAGE_INSTALL = "busybox base-files kmod udev udev-rules-qoriq \
                 dropbear wget curl tftp-hpa \
                 gzip unzip tar \
                 shadow watchdog \
-                nano i2c-tools stressapptest"
+                i2c-tools stressapptest"
 
 # We don't want any root password for the rescue system
 EXTRA_USERS_PARAMS = "usermod -p '' root;"

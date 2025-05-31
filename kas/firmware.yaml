@@ -1,0 +1,11 @@
+
+header:
+  version: 11
+  includes:
+    - kas/common.yaml
+
+machine: gateway
+distro: recovery
+
+target:
+  - firmware

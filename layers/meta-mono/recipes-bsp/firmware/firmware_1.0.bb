@@ -5,27 +5,25 @@ LICENSE = "MIT"
 
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 
-DEPENDS += "atf u-boot-env fman-ucode linux-mono"
-do_compile[depends] += "atf:do_deploy"
-do_compile[depends] += "u-boot-env:do_deploy"
-do_compile[depends] += "fman-ucode:do_deploy"
-do_compile[depends] += "linux-mono:do_deploy"
+DEPENDS += "qoriq-atf fm-ucode linux-qoriq"
+do_compile[depends] += "qoriq-atf:do_deploy"
+do_compile[depends] += "fm-ucode:do_deploy"
+do_compile[depends] += "linux-qoriq:do_deploy"
 
 inherit deploy
-
-# Boot type - can be overridden at build time
-BOOTTYPE ?= "qspi"
 
 # No source needed - just assembly
 SRC_URI = ""
 S = "${WORKDIR}/src"
 
-COMPATIBLE_MACHINE = "gateway-dk"
+COMPATIBLE_MACHINE = "gateway"
+
+# We can also use BOOTTYPE=emmc in bitbake command to use it instead
+BOOTTYPE ?= "qspi"
 
 # NOR Flash layout configuration
 FLASH_SIZE = "33554432"
 BL2_OFFSET = "0"
-# BL2_OFFSET_emmc = "4096"
 FIP_OFFSET = "1048576"
 ENV_OFFSET = "3145728"
 FMAN_OFFSET = "4194304"
@@ -34,12 +32,12 @@ KERNEL_OFFSET = "10485760"
 
 # Component files mapping
 COMPONENT_FILES = " \
-    bl2:${DEPLOY_DIR_IMAGE}/bl2_${BOOTTYPE}.pbl:${BL2_OFFSET} \
-    fip:${DEPLOY_DIR_IMAGE}/fip.bin:${FIP_OFFSET} \
+    bl2:${DEPLOY_DIR_IMAGE}/atf/bl2_${BOOTTYPE}.pbl:${BL2_OFFSET} \
+    fip:${DEPLOY_DIR_IMAGE}/atf/fip_uboot.bin:${FIP_OFFSET} \
     env:${DEPLOY_DIR_IMAGE}/u-boot-env.bin:${ENV_OFFSET} \
-    fman:${DEPLOY_DIR_IMAGE}/fman-ucode.bin:${FMAN_OFFSET} \
+    fman:${DEPLOY_DIR_IMAGE}/${FMAN_UCODE}:${FMAN_OFFSET} \
     dtb:${DEPLOY_DIR_IMAGE}/mono-gateway-dk-sdk.dtb:${DTB_OFFSET} \
-    kernel:${DEPLOY_DIR_IMAGE}/Image.gz-initramfs-gateway-dk.bin:${KERNEL_OFFSET}"
+    kernel:${DEPLOY_DIR_IMAGE}/Image.gz-initramfs-gateway.bin:${KERNEL_OFFSET}"
 
 do_compile() {
     cd ${S}

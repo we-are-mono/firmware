@@ -319,11 +319,13 @@
 	ethernet@f0000 { /* 10GEC1 */
 		phy-connection-type = "10gbase-r";
 		managed = "in-band-status";
+		sfp = <&sfp_xfi0>;
 	};
 
 	ethernet@f2000 { /* 10GEC1 */
 		phy-connection-type = "10gbase-r";
 		managed = "in-band-status";
+		sfp = <&sfp_xfi1>;
 	};
 	
 	mdio@fc000 {
