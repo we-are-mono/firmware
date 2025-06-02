@@ -47,8 +47,9 @@ CONFIG_SYSFS=y
 CONFIG_DEVTMPFS=y
 CONFIG_DEVTMPFS_MOUNT=y
 
-# Process accounting and control groups (minimal)
+# Process accounting and control groups (for systemd)
 CONFIG_BSD_PROCESS_ACCT=y
+CONFIG_CGROUPS=y
 CONFIG_MEMCG=y
 CONFIG_BLK_CGROUP=y
 CONFIG_CGROUP_PIDS=y
@@ -57,11 +58,28 @@ CONFIG_CGROUP_FREEZER=y
 CONFIG_CGROUP_DEVICE=y
 CONFIG_CGROUP_CPUACCT=y
 CONFIG_CGROUP_BPF=y
+CONFIG_CGROUP_SCHED=y
+CONFIG_FAIR_GROUP_SCHED=y
+CONFIG_CFS_BANDWIDTH=y
 
-# Namespaces and user management
+# Namespaces and user management (for systemd)
 CONFIG_NAMESPACES=y
 CONFIG_USER_NS=y
+CONFIG_NET_NS=y
+CONFIG_PID_NS=y
+CONFIG_IPC_NS=y
+CONFIG_UTS_NS=y
 CONFIG_SCHED_AUTOGROUP=y
+
+# System call requirements for systemd
+CONFIG_SIGNALFD=y
+CONFIG_TIMERFD=y
+CONFIG_EVENTFD=y
+CONFIG_EPOLL=y
+CONFIG_FHANDLE=y
+CONFIG_INOTIFY_USER=y
+CONFIG_FANOTIFY=y
+CONFIG_CHECKPOINT_RESTORE=y
 
 # Build optimizations
 CONFIG_CC_OPTIMIZE_FOR_SIZE=y
@@ -133,7 +151,7 @@ CONFIG_WQ_POWER_EFFICIENT_DEFAULT=y
 CONFIG_ENERGY_MODEL=y
 CONFIG_ARM_PSCI_CPUIDLE=y
 
-# Virtualization (if needed)
+# Virtualization
 CONFIG_VIRTUALIZATION=y
 CONFIG_KVM=y
 
@@ -168,7 +186,7 @@ CONFIG_NETLINK_DIAG=y
 # Connector for userspace communication
 CONFIG_CONNECTOR=y
 
-# PCI support (you specified this as needed)
+# PCI support
 CONFIG_PCI=y
 CONFIG_PCIEPORTBUS=y
 CONFIG_PCIEAER=y
@@ -291,10 +309,10 @@ CONFIG_NET_FLOW_LIMIT=y
 CONFIG_NET_RX_BUSY_POLL=y
 CONFIG_BQL=y
 
-# Additional debugging for SFP+ issues (optional, disable in production)
-CONFIG_DEBUG_GPIO=y
-CONFIG_I2C_DEBUG_CORE=y
-CONFIG_I2C_DEBUG_ALGO=y
+# Additional debugging for SFP+ issues (optional, enable for development)
+# CONFIG_DEBUG_GPIO=y
+# CONFIG_I2C_DEBUG_CORE=y
+# CONFIG_I2C_DEBUG_ALGO=y
 
 # Ensure proper thermal monitoring for high-power SFP+ modules
 CONFIG_THERMAL_HWMON=y
@@ -307,18 +325,18 @@ CONFIG_NET_SCHED=y
 CONFIG_NET_SCH_FQ=y
 CONFIG_NET_SCH_FQ_CODEL=y
 
-# Optional: Mellanox ConnectX support if using their SFP+ modules
-# CONFIG_MLX4_EN=m
-# CONFIG_MLX5_CORE=m
-# CONFIG_MLX5_CORE_EN=y
+# Optional: Mellanox ConnectX support for their SFP+ modules
+CONFIG_MLX4_EN=m
+CONFIG_MLX5_CORE=m
+CONFIG_MLX5_CORE_EN=y
 
-# Optional: Intel ixgbe driver if using Intel-based SFP+ modules
-# CONFIG_IXGBE=m
-# CONFIG_IXGBE_DCA=y
-# CONFIG_IXGBE_DCB=y
+# Optional: Intel ixgbe driver for Intel-based SFP+ modules
+CONFIG_IXGBE=m
+CONFIG_IXGBE_DCA=y
+CONFIG_IXGBE_DCB=y
 
 # Optional: Chelsio T4/T5 support
-# CONFIG_CHELSIO_T4=m
+CONFIG_CHELSIO_T4=m
 
 # Make sure EEPROM support is enabled for module identification
 CONFIG_EEPROM_AT24=y
@@ -330,7 +348,7 @@ CONFIG_FIXED_PHY=y
 # SERDES configuration support
 CONFIG_GENERIC_PHY=y
 
-# USB host support (you specified this as needed)
+# USB host support
 CONFIG_USB=y
 CONFIG_USB_OTG=y
 CONFIG_USB_XHCI_HCD=y
@@ -347,8 +365,7 @@ CONFIG_BLK_DEV_SD=y
 CONFIG_USB_UAS=y
 CONFIG_EXFAT_FS=y
 
-
-# Serial console (you specified this as needed)
+# Serial console
 CONFIG_SERIAL_8250=y
 CONFIG_SERIAL_8250_CONSOLE=y
 CONFIG_SERIAL_8250_NR_UARTS=8
@@ -382,7 +399,7 @@ CONFIG_GPIO_MPC8XXX=y
 CONFIG_GPIO_SYSCON=y
 CONFIG_GPIO_PCA953X=y
 
-# RTC support (you specified this as needed)
+# RTC support
 CONFIG_RTC_CLASS=y
 CONFIG_RTC_DRV_PCF2127=y
 
@@ -437,6 +454,7 @@ CONFIG_NFS_FS=y
 CONFIG_NFS_V4=y
 CONFIG_ROOT_NFS=y
 CONFIG_HFSPLUS_FS=y
+CONFIG_AUTOFS4_FS=y
 
 # Crypto support for LS1046A
 CONFIG_CRYPTO_USER=y
