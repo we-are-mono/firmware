@@ -99,6 +99,11 @@ sdk_image_postprocess() {
     # Remove unnecessary systemd services
     rm -f ${IMAGE_ROOTFS}${systemd_system_unitdir}/systemd-networkd.service
     rm -f ${IMAGE_ROOTFS}${systemd_system_unitdir}/systemd-resolved.service
+
+    # Create hugepages mount point and add to fstab
+    mkdir -p ${IMAGE_ROOTFS}/mnt/hugepages
+    echo "# Hugepages for DPDK" >> ${IMAGE_ROOTFS}${sysconfdir}/fstab
+    echo "hugetlbfs /mnt/hugepages hugetlbfs defaults 0 0" >> ${IMAGE_ROOTFS}${sysconfdir}/fstab
 }
 
 ROOTFS_POSTPROCESS_COMMAND += "sdk_image_postprocess; "
