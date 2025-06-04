@@ -11,9 +11,10 @@ stdout=serial@21c0500
 
 bootcmd=run distro_bootcmd
 bootdelay=10
-bootargs=console=ttyS0,115200 root=/dev/mmcblk0p1 earlycon=uart8250,mmio,0x21c0500 rw rootwait
-distro_bootcmd=ext4load mmc 0:1 $kernel_addr_r /boot/Image; ext4load mmc 0:1 $fdt_addr_r /boot/mono-gateway-dk-sdk.dtb; booti $kernel_addr_r - $fdt_addr_r
-recovery=sf probe 0:0; sf read $kernel_addr_r 0xA00000 0x1600000; sf read $fdt_addr_r 0x500000 0x100000; booti $kernel_addr_r - $fdt_addr_r
+bootargs=console=ttyS0,115200 root=/dev/mmcblk0 earlycon=uart8250,mmio,0x21c0500 rw rootwait rootfstype=ext4
+distro_bootcmd=ext4load mmc 0:0 $kernel_addr_r /boot/Image.gz; ext4load mmc 0:0 $fdt_addr_r /boot/mono-gateway-dk-sdk.dtb; booti $kernel_addr_r - $fdt_addr_r
+recovery_bootargs=console=ttyS0,115200 earlycon=uart8250,mmio,0x21c0500 rw rootwait
+recovery=setenv bootargs ${recovery_bootargs}; sf probe 0:0; sf read $kernel_addr_r 0xA00000 0x1600000; sf read $fdt_addr_r 0x500000 0x100000; booti $kernel_addr_r - $fdt_addr_r
 
 ethaddr=02:4D:4F:4E:4F:01
 eth1addr=02:4D:4F:4E:4F:02

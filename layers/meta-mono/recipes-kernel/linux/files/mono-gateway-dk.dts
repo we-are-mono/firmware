@@ -87,6 +87,18 @@
 		#address-cells = <1>;
 		#size-cells = <0>;
 
+		i2c@0 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			reg = <0>;
+
+			retimer@18 {
+				compatible = "ti,ds100df410";
+				reg = <0x18>;
+				status = "okay";
+			};
+		};
+
 		i2c@1 {
 			#address-cells = <1>;
 			#size-cells = <0>;
@@ -317,15 +329,15 @@
 	};
 
 	ethernet@f0000 { /* 10GEC1 */
+		sfp = <&sfp_xfi0>;
 		phy-connection-type = "10gbase-r";
 		managed = "in-band-status";
-		sfp = <&sfp_xfi0>;
 	};
 
 	ethernet@f2000 { /* 10GEC1 */
+		sfp = <&sfp_xfi1>;
 		phy-connection-type = "10gbase-r";
 		managed = "in-band-status";
-		sfp = <&sfp_xfi1>;
 	};
 	
 	mdio@fc000 {

@@ -1,0 +1,30 @@
+header:
+  version: 11
+
+repos:
+  bitbake:
+    url: https://git.openembedded.org/bitbake
+    branch: "2.10"
+    path: sources/bitbake
+    layers:
+      .: "excluded"
+
+  openembedded-core:
+    url: https://git.openembedded.org/openembedded-core
+    branch: styhead
+    path: sources/openembedded-core
+    layers:
+      meta:
+
+  meta-openembedded:
+    url: https://git.openembedded.org/meta-openembedded
+    branch: styhead
+    path: sources/meta-openembedded
+    layers:
+      meta-oe:
+      meta-filesystems:
+      meta-networking:
+      meta-python:
+  
+  meta-mono:
+    path: layers/meta-mono

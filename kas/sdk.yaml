@@ -2,9 +2,9 @@ header:
   version: 11
   includes:
     - common.yaml
-
+    
 machine: gateway
-distro: recovery
+distro: sdk
 
 repos:
   meta-arm:
@@ -28,6 +28,7 @@ repos:
     path: sources/meta-qoriq
     layers:
       meta-qoriq-bsp:
+      meta-qoriq-sdk:
 
   meta-freescale:
     url: https://github.com/Freescale/meta-freescale
@@ -39,7 +40,6 @@ repos:
 local_conf_header:
   site-config: |
     require ${TOPDIR}/../site.conf
-    BBMASK += "/meta-mono/recipes-fsl/packagegroups/packagegroup-fsl-tools-extended.bbappend"
 
 target:
-  - firmware
+  - sdk-image
