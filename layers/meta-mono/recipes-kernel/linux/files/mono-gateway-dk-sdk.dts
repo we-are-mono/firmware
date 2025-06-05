@@ -67,13 +67,13 @@ pcie@3600000 {
 
 	ethernet@f0000 {
 		/delete-property/ managed;
-		fixed-link = <0 1 1000 0 0>;
+		fixed-link = <0 1 10000 0 0>;
 		phy-connection-type = "xgmii";
 	};
 
 	ethernet@f2000 {
 		/delete-property/ managed;
-		fixed-link = <0 1 1000 0 0>;
+		fixed-link = <0 1 10000 0 0>;
 		phy-connection-type = "xgmii";
 	};
 };
