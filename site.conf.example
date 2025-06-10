@@ -15,3 +15,10 @@ SDKMACHINE = "x86_64"
 # Network settings
 BB_FETCH_PREMIRRORONLY = "0"
 BB_GENERATE_MIRROR_TARBALLS = "0"
+
+# Make sure to always include local fixes
+BBLAYERS += "/path/to/firmware/build/workspace"
+
+# Mask bbappend files that don't have corresponding base recipes
+BBMASK += "/meta-qoriq/meta-qoriq-sdk/recipes-fsl/images/fsl-image-multimedia-full.bbappend"
+BBMASK += "/meta-qoriq/meta-qoriq-sdk/recipes-fsl/packagegroups/packagegroup-fsl-gstreamer1.0.bbappend"
