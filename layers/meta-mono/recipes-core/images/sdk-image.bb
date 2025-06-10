@@ -1,11 +1,8 @@
-SUMMARY = "Minimal console-only systemd-based SDK image"
 DESCRIPTION = "A minimal systemd-based root filesystem image for console/UART operation"
+LICENSE = "MIT"
 
 # Inherit core image class and user management
 inherit core-image extrausers
-
-# License
-LICENSE = "MIT"
 
 # Image features - writable rootfs for eMMC
 IMAGE_FEATURES = ""
@@ -54,6 +51,7 @@ IMAGE_INSTALL = "\
     kernel-devicetree \
     kmod \
     less \
+    lmsensors \
     packagegroup-fsl-networking-core \
     packagegroup-fsl-tools-extended \
     procps \
@@ -81,12 +79,8 @@ PACKAGE_EXCLUDE = "\
     wpa-supplicant \
     "
 
-# Image size - generous sizing for 32GB eMMC
-# Let Yocto auto-calculate based on package requirements, add 1GB extra space
-IMAGE_ROOTFS_EXTRA_SPACE = "1048576"
-
 # Image types to generate
-IMAGE_FSTYPES = "tar.gz ext4"
+IMAGE_FSTYPES = "ext4"
 
 # Ensure clean ext4 images
 EXTRA_IMAGECMD:ext4 = "-F -i 4096 -J size=64"

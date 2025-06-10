@@ -1,6 +1,4 @@
-SUMMARY = "Complete firmware image for Gateway Development Kit"
 DESCRIPTION = "Combines RCW+BL2, ATF+U-Boot, environment, FMAN ucode, and kernel into 32MB NOR flash image"
-SECTION = "bootloaders"
 LICENSE = "MIT"
 
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"

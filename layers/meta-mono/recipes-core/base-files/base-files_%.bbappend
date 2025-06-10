@@ -1,2 +1,2 @@
-# By default, it's set to machine name
-hostname = "recovery"
+hostname = "gateway"
+hostname:recovery = "recovery"
