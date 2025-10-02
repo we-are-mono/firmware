@@ -19,7 +19,7 @@ IMAGE_INSTALL = "busybox base-files kmod udev udev-rules-qoriq \
 EXTRA_USERS_PARAMS = "usermod -p '' root;"
 
 # This line ensures no root password is needed for login
-IMAGE_FEATURES += "debug-tweaks"
+IMAGE_FEATURES += "empty-root-password"
 
 # Remove package management and other bloat
 IMAGE_FEATURES:remove = "package-management"

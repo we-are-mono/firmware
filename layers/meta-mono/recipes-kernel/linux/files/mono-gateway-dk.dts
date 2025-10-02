@@ -26,6 +26,38 @@
 		stdout-path = "serial0:115200n8";
 	};
 
+	leds {
+		compatible = "gpio-leds";
+
+		/* SFP+ Port 0 LEDs - Activity/Link swapped */
+		sfp0_link {
+			label = "sfp0:link";
+			gpios = <&gpio2 18 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+		};
+
+		sfp0_activity {
+			label = "sfp0:activity";
+			gpios = <&gpio2 17 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+			linux,default-trigger = "netdev";
+		};
+
+		/* SFP+ Port 1 LEDs - Activity/Link swapped */
+		sfp1_link {
+			label = "sfp1:link";
+			gpios = <&gpio2 16 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+		};
+
+		sfp1_activity {
+			label = "sfp1:activity";
+			gpios = <&gpio2 15 GPIO_ACTIVE_HIGH>;
+			default-state = "off";
+			linux,default-trigger = "netdev";
+		};
+	};
+
 	/* SFP 1 */
 	sfp_xfi0: sfp-xfi0 {
 		compatible = "sff,sfp";
@@ -47,6 +79,33 @@
 	};
 };
 
+&pcie3 {
+	status = "okay";
+};
+
+&gpio2 {
+	2R-enable {
+		gpio-hog;
+		gpios = <6 GPIO_ACTIVE_LOW>;
+		output-high;
+		line-name = "2r-enable";
+	};
+
+	3R-enable {
+		gpio-hog;
+		gpios = <2 GPIO_ACTIVE_LOW>;
+		output-low;
+		line-name = "3r-enable";
+	};
+
+	uart-mux {
+		gpio-hog;
+		gpios = <26 GPIO_ACTIVE_HIGH>;
+		output-high; /* "output-high" for 2R, "output-low" for 3R */
+		line-name = "uart-mux";
+	};
+};
+
 &wdog0 {
 	big-endian;
 };
@@ -56,6 +115,11 @@
 };
 
 &duart1 {
+	status = "okay";
+	uart-has-rtscts;
+};
+
+&dspi {
 	status = "okay";
 };
 
@@ -120,33 +184,6 @@
 				reg = <0x4c>;
 			};
 		};
-
-		/*
-		i2c@3 {
-			#address-cells = <1>;
-			#size-cells = <0>;
-			reg = <3>;
-
-			fan_controller: emc2302@2e {
-				compatible = "microchip,emc2305";
-				reg = <0x2e>;
-				#address-cells = <1>;
-				#size-cells = <0>;
-				#pwm-cells = <2>;
-				
-				fan@0 {
-					reg = <0>;
-					#cooling-cells = <2>;
-					pwms = <&fan_controller 1 1>;
-				};
-				fan@1	{
-					reg = <1>;
-					#cooling-cells = <2>;
-					pwms = <&fan_controller 1 1>;
-				};
-			};
-		};
-		*/
 	};
 };
 
@@ -171,13 +208,12 @@
 			#size-cells = <0>;
 			reg = <1>;
 		};
-    };
+	};
 };
 
 &i2c2 {
 	status = "okay";
 
-	/*  */
 	i2c-mux@70 {
 		compatible = "nxp,pca9545";
 		reg = <0x70>;
@@ -277,9 +313,11 @@
 				status = "okay";
 			};
 		};
-
-		
 	};
+};
+
+&i2c3 {
+	status = "okay";
 };
 
 &qspi {
@@ -295,7 +333,6 @@
 };
 
 #include "fsl-ls1046-post.dtsi"
-
 
 &fman0 {
 	ethernet@e0000 {
@@ -334,7 +371,7 @@
 		managed = "in-band-status";
 	};
 
-	ethernet@f2000 { /* 10GEC1 */
+	ethernet@f2000 { /* 10GEC2 */
 		sfp = <&sfp_xfi1>;
 		phy-connection-type = "10gbase-r";
 		managed = "in-band-status";

@@ -1,7 +1,7 @@
 # Build optimization, change these according to your number of cpus available.
 # Run `$ nproc` to see how many you can allocate to Yocto/bitbake.
-PARALLEL_MAKE = "-j 16"
-BB_NUMBER_THREADS = "16"
+PARALLEL_MAKE = "-j 24"
+BB_NUMBER_THREADS = "24"
 
 # Shared cache locations. For reusability purposes, it's much better to have all
 # the downloaded sources and state caches outside of the project directory.
@@ -22,3 +22,4 @@ BBLAYERS += "/path/to/firmware/build/workspace"
 # Mask bbappend files that don't have corresponding base recipes
 BBMASK += "/meta-qoriq/meta-qoriq-sdk/recipes-fsl/images/fsl-image-multimedia-full.bbappend"
 BBMASK += "/meta-qoriq/meta-qoriq-sdk/recipes-fsl/packagegroups/packagegroup-fsl-gstreamer1.0.bbappend"
+BBMASK += "/meta-qoriq/meta-qoriq-bsp/recipes-containers/lxc/lxc_%.bbappend"

@@ -11,7 +11,7 @@ IMAGE_FEATURES = ""
 EXTRA_USERS_PARAMS = "usermod -p '' root;"
 
 # Image features - writable rootfs for eMMC, debug-tweaks for development
-IMAGE_FEATURES = "debug-tweaks package-management"
+IMAGE_FEATURES = "package-management"
 
 # This is defined in machine.conf, but we override it here 
 # to remove initramfs from the kernel image.
@@ -64,6 +64,13 @@ IMAGE_INSTALL = "\
     udev \
     udev-rules-qoriq \
     which \
+    hostapd \
+    bluez5 \
+    kernel-module-nxp-wlan \
+    firmware-nxp-wifi-nxp9098-pcie \
+    firmware-nxp-wifi-nxpiw612-sdio \
+    wpa-supplicant \
+    iw \
     "
 
 # Image configuration
@@ -72,11 +79,8 @@ IMAGE_LINGUAS = ""
 # Remove unnecessary packages
 PACKAGE_EXCLUDE = "\
     alsa-utils \
-    bluez5 \
     busybox \
     pulseaudio \
-    wireless-tools \
-    wpa-supplicant \
     "
 
 # Image types to generate

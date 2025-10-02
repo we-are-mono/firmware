@@ -9,7 +9,7 @@ distro: sdk
 repos:
   meta-arm:
     url: https://git.yoctoproject.org/meta-arm
-    branch: styhead
+    branch: walnascar
     path: sources/meta-arm
     layers:
       meta-arm:
@@ -17,14 +17,14 @@ repos:
 
   meta-virtualization:
     url: https://git.yoctoproject.org/meta-virtualization
-    branch: styhead
+    branch: walnascar
     path: sources/meta-virtualization
     layers:
       .:
 
   meta-qoriq:
     url: https://github.com/nxp-qoriq/meta-qoriq
-    branch: styhead
+    branch: walnascar
     path: sources/meta-qoriq
     layers:
       meta-qoriq-bsp:
@@ -32,7 +32,7 @@ repos:
 
   meta-freescale:
     url: https://github.com/Freescale/meta-freescale
-    branch: styhead
+    branch: walnascar
     path: sources/meta-freescale
     layers:
       .:

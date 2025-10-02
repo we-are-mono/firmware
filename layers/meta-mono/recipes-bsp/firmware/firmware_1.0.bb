@@ -16,11 +16,11 @@ S = "${WORKDIR}/src"
 
 COMPATIBLE_MACHINE = "gateway"
 
-# We can also use BOOTTYPE=emmc in bitbake command to use it instead
-BOOTTYPE ?= "qspi"
+# We can also use BOOTSOURCE=emmc in bitbake command to use it instead
+BOOTSOURCE ?= "qspi"
 
 # NOR Flash layout configuration
-FLASH_SIZE = "33554432"
+FLASH_SIZE = "33030144"
 BL2_OFFSET = "0"
 FIP_OFFSET = "1048576"
 ENV_OFFSET = "3145728"
@@ -30,7 +30,7 @@ KERNEL_OFFSET = "10485760"
 
 # Component files mapping
 COMPONENT_FILES = " \
-    bl2:${DEPLOY_DIR_IMAGE}/atf/bl2_${BOOTTYPE}.pbl:${BL2_OFFSET} \
+    bl2:${DEPLOY_DIR_IMAGE}/atf/bl2_${BOOTSOURCE}.pbl:${BL2_OFFSET} \
     fip:${DEPLOY_DIR_IMAGE}/atf/fip_uboot.bin:${FIP_OFFSET} \
     env:${DEPLOY_DIR_IMAGE}/u-boot-env.bin:${ENV_OFFSET} \
     fman:${DEPLOY_DIR_IMAGE}/${FMAN_UCODE}:${FMAN_OFFSET} \
@@ -40,8 +40,10 @@ COMPONENT_FILES = " \
 do_compile() {
     cd ${S}
     
+    echo "Building firmware with BOOTSOURCE=${BOOTSOURCE}"
+    
     # Create empty firmware image
-    dd if=/dev/zero of=firmware-${BOOTTYPE}.bin bs=1 count=${FLASH_SIZE}
+    dd if=/dev/zero of=firmware-${BOOTSOURCE}.bin bs=1 count=${FLASH_SIZE}
     
     # Process each component and bake it into the image we just created
     echo ${COMPONENT_FILES} | tr ' ' '\n' | while read component; do
@@ -50,16 +52,26 @@ do_compile() {
         name=$(echo $component | cut -d: -f1)
         file=$(echo $component | cut -d: -f2)  
         offset=$(echo $component | cut -d: -f3)
+        
+        if [ ! -f "$file" ]; then
+            bbfatal "Component file not found: $file (for $name)"
+        fi
+        
         size=$(stat -c%s "$file")
+        echo "Adding $name: $file (size: $size bytes) at offset $offset"
 
-        dd if="$file" of=firmware-${BOOTTYPE}.bin bs=1 seek=$offset conv=notrunc
+        dd if="$file" of=firmware-${BOOTSOURCE}.bin bs=1 seek=$offset conv=notrunc
     done
+    
+    echo "Completed firmware-${BOOTSOURCE}.bin"
 }
 
 do_deploy() {
     install -d ${DEPLOYDIR}
-    install -m 644 ${S}/firmware-${BOOTTYPE}.bin ${DEPLOYDIR}/
-    ln -sf firmware-${BOOTTYPE}.bin ${DEPLOYDIR}/firmware.bin
+    install -m 644 ${S}/firmware-${BOOTSOURCE}.bin ${DEPLOYDIR}/
+    ln -sf firmware-${BOOTSOURCE}.bin ${DEPLOYDIR}/firmware.bin
+    
+    echo "Deployed firmware-${BOOTSOURCE}.bin"
 }
 
 addtask deploy after do_compile before do_build
