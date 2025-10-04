@@ -29,30 +29,30 @@
 	leds {
 		compatible = "gpio-leds";
 
-		/* SFP+ Port 0 LEDs - Activity/Link swapped */
+		/* SFP+ Port 0 LEDs - Activity/Link */
 		sfp0_link {
 			label = "sfp0:link";
-			gpios = <&gpio2 18 GPIO_ACTIVE_HIGH>;
+			gpios = <&gpio2 17 GPIO_ACTIVE_HIGH>;
 			default-state = "off";
 		};
 
 		sfp0_activity {
 			label = "sfp0:activity";
-			gpios = <&gpio2 17 GPIO_ACTIVE_HIGH>;
+			gpios = <&gpio2 18 GPIO_ACTIVE_HIGH>;
 			default-state = "off";
 			linux,default-trigger = "netdev";
 		};
 
-		/* SFP+ Port 1 LEDs - Activity/Link swapped */
+		/* SFP+ Port 1 LEDs - Activity/Link */
 		sfp1_link {
 			label = "sfp1:link";
-			gpios = <&gpio2 16 GPIO_ACTIVE_HIGH>;
+			gpios = <&gpio2 15 GPIO_ACTIVE_HIGH>;
 			default-state = "off";
 		};
 
 		sfp1_activity {
 			label = "sfp1:activity";
-			gpios = <&gpio2 15 GPIO_ACTIVE_HIGH>;
+			gpios = <&gpio2 16 GPIO_ACTIVE_HIGH>;
 			default-state = "off";
 			linux,default-trigger = "netdev";
 		};
@@ -361,13 +361,13 @@
 		status = "okay";
 	};
 
-	ethernet@f0000 { /* 10GEC1 */
+	fm1_mac9: ethernet@f0000 { /* 10GEC1 */
 		sfp = <&sfp_xfi0>;
 		phy-connection-type = "10gbase-r";
 		managed = "in-band-status";
 	};
 
-	ethernet@f2000 { /* 10GEC2 */
+	fm1_mac10: ethernet@f2000 { /* 10GEC2 */
 		sfp = <&sfp_xfi1>;
 		phy-connection-type = "10gbase-r";
 		managed = "in-band-status";

@@ -72,6 +72,7 @@ IMAGE_INSTALL = "\
     firmware-nxp-wifi-nxpiw612-sdio \
     wpa-supplicant \
     iw \
+    sfp-led-daemon \
     "
 
 SYSTEMD_AUTO_ENABLE:pn-watchdog = "enable"
