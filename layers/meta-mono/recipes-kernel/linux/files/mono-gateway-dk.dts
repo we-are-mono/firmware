@@ -106,10 +106,6 @@
 	};
 };
 
-&wdog0 {
-	big-endian;
-};
-
 &duart0 {
 	status = "okay";
 };

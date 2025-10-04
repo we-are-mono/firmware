@@ -6,14 +6,12 @@ inherit image
 
 # Keep it minimal - just BusyBox and essential packages that should be
 # sufficient for a rescue system; Basic networking, partitioning and compression.
-IMAGE_INSTALL = "busybox base-files kmod udev udev-rules-qoriq \
+IMAGE_INSTALL = "busybox base-files shadow kmod udev udev-rules-qoriq \
                 parted util-linux-fdisk util-linux-lsblk util-linux-blkid \
                 e2fsprogs mmc-utils mtd-utils \
                 dropbear curl tftp-hpa \
                 gzip tar \
-                shadow watchdog \
                 i2c-tools tmux htop"
-
 
 # We don't want any root password for the rescue system
 EXTRA_USERS_PARAMS = "usermod -p '' root;"

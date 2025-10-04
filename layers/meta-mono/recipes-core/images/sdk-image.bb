@@ -64,6 +64,7 @@ IMAGE_INSTALL = "\
     udev \
     udev-rules-qoriq \
     which \
+    watchdog \
     hostapd \
     bluez5 \
     kernel-module-nxp-wlan \
@@ -72,6 +73,8 @@ IMAGE_INSTALL = "\
     wpa-supplicant \
     iw \
     "
+
+SYSTEMD_AUTO_ENABLE:pn-watchdog = "enable"
 
 # Image configuration
 IMAGE_LINGUAS = ""
@@ -96,7 +99,6 @@ SYSTEMD_DEFAULT_TARGET = "multi-user.target"
 sdk_image_postprocess() {
     # Remove unnecessary systemd services
     rm -f ${IMAGE_ROOTFS}${systemd_system_unitdir}/systemd-networkd.service
-    rm -f ${IMAGE_ROOTFS}${systemd_system_unitdir}/systemd-resolved.service
 
     # Create hugepages mount point and add to fstab
     mkdir -p ${IMAGE_ROOTFS}/mnt/hugepages
