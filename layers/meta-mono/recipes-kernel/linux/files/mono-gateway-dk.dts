@@ -113,6 +113,11 @@
 &duart1 {
 	status = "okay";
 	uart-has-rtscts;
+
+	bluetooth {
+		compatible = "nxp,88w8987-bt";
+		fw-init-baudrate = <3000000>; 
+	};
 };
 
 &dspi {

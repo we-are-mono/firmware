@@ -64,6 +64,7 @@ IMAGE_INSTALL:append = " \
     kmod \
     udev \
     udev-rules-qoriq \
+    modprobe-config \
     "
 
 # System services
@@ -95,6 +96,7 @@ IMAGE_INSTALL:append = " \
     kernel-module-nxp-wlan \
     firmware-nxp-wifi-nxp9098-pcie \
     firmware-nxp-wifi-nxpiw612-sdio \
+    wireless-regdb \
     "
 
 IMAGE_LINGUAS = ""
