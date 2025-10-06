@@ -65,6 +65,7 @@ IMAGE_INSTALL:append = " \
     udev \
     udev-rules-qoriq \
     modprobe-config \
+    mtd-utils \
     "
 
 # System services
