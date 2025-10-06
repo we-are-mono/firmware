@@ -1,23 +1,18 @@
 DESCRIPTION = "A minimal systemd-based root filesystem image for console/UART operation"
 LICENSE = "MIT"
 
-# Inherit core image class and user management
 inherit core-image extrausers
 
-# Image features - writable rootfs for eMMC
-IMAGE_FEATURES = ""
-
-# We set root to have no password (for now)
+# TODO: Set proper root password for production
 EXTRA_USERS_PARAMS = "usermod -p '' root;"
 
-# Image features - writable rootfs for eMMC, debug-tweaks for development
+# Enable package management for runtime updates
 IMAGE_FEATURES = "package-management"
 
-# This is defined in machine.conf, but we override it here 
-# to remove initramfs from the kernel image.
+# Disable initramfs bundling (defined in machine.conf)
 INITRAMFS_IMAGE_BUNDLE = "0"
 
-# Essential packages
+# Essential system packages
 CORE_IMAGE_BASE_INSTALL = "\
     base-files \
     base-passwd \
@@ -35,73 +30,94 @@ CORE_IMAGE_BASE_INSTALL = "\
     util-linux \
     "
 
-# Additional minimal packages
-IMAGE_INSTALL = "\
-    ${CORE_IMAGE_BASE_INSTALL} \
-    e2fsprogs \
-    e2fsprogs-resize2fs \
+# Base system utilities
+IMAGE_INSTALL:append = " \
     findutils \
-    fmc \
-    fmlib \
     glibc-utils \
     grep \
     gzip \
-    htop \
-    iperf3 \
-    kernel-devicetree \
-    kmod \
     less \
-    lmsensors \
-    packagegroup-fsl-networking-core \
-    packagegroup-fsl-tools-extended \
+    sed \
+    tar \
+    wget \
+    which \
+    "
+
+# System monitoring and debugging tools
+IMAGE_INSTALL:append = " \
+    htop \
     procps \
     psmisc \
-    sed \
-    systemd-analyze \
-    systemd-serialgetty \
     stressapptest \
-    tar \
+    systemd-analyze \
+    "
+
+# Filesystem and storage utilities
+IMAGE_INSTALL:append = " \
+    e2fsprogs \
+    e2fsprogs-resize2fs \
+    "
+
+# Kernel and device management
+IMAGE_INSTALL:append = " \
+    kernel-devicetree \
+    kmod \
     udev \
     udev-rules-qoriq \
-    which \
-    watchdog \
+    "
+
+# System services
+IMAGE_INSTALL:append = " \
+    systemd-serialgetty \
+    "
+
+# Hardware monitoring and control
+IMAGE_INSTALL:append = " \
+    lmsensors \
+    sfp-led-daemon \
+    "
+
+# NXP/Freescale specific packages
+IMAGE_INSTALL:append = " \
+    fmc \
+    fmlib \
+    packagegroup-fsl-networking-core \
+    packagegroup-fsl-tools-extended \
+    "
+
+# Networking (Ethernet, WiFi, Bluetooth)
+IMAGE_INSTALL:append = " \
+    iperf3 \
     hostapd \
+    wpa-supplicant \
+    iw \
     bluez5 \
     kernel-module-nxp-wlan \
     firmware-nxp-wifi-nxp9098-pcie \
     firmware-nxp-wifi-nxpiw612-sdio \
-    wpa-supplicant \
-    iw \
-    sfp-led-daemon \
     "
 
-SYSTEMD_AUTO_ENABLE:pn-watchdog = "enable"
-
-# Image configuration
 IMAGE_LINGUAS = ""
 
-# Remove unnecessary packages
+# Explicitly exclude unwanted packages
 PACKAGE_EXCLUDE = "\
     alsa-utils \
     busybox \
     pulseaudio \
     "
 
-# Image types to generate
+# Generate ext4 filesystem for eMMC
 IMAGE_FSTYPES = "ext4"
-
-# Ensure clean ext4 images
 EXTRA_IMAGECMD:ext4 = "-F -i 4096 -J size=64"
 
-# Disable services that aren't needed in minimal setup
 SYSTEMD_DEFAULT_TARGET = "multi-user.target"
 
-# Function to perform additional image customization
+# Image customization
 sdk_image_postprocess() {
     # Remove unnecessary systemd services
     rm -f ${IMAGE_ROOTFS}${systemd_system_unitdir}/systemd-networkd.service
 
-    # Create hugepages mount point and add to fstab
+    # Setup hugepages for DPDK
     mkdir -p ${IMAGE_ROOTFS}/mnt/hugepages
     echo "# Hugepages for DPDK" >> ${IMAGE_ROOTFS}${sysconfdir}/fstab
     echo "hugetlbfs /mnt/hugepages hugetlbfs defaults 0 0" >> ${IMAGE_ROOTFS}${sysconfdir}/fstab

@@ -8,10 +8,9 @@ inherit image
 # sufficient for a rescue system; Basic networking, partitioning and compression.
 IMAGE_INSTALL = "busybox base-files shadow kmod udev udev-rules-qoriq \
                 parted util-linux-fdisk util-linux-lsblk util-linux-blkid \
-                e2fsprogs mmc-utils mtd-utils \
-                dropbear curl tftp-hpa \
-                gzip tar \
-                i2c-tools tmux htop"
+                e2fsprogs mmc-utils mtd-utils i2c-tools \
+                curl tftp-hpa \
+                gzip tar"
 
 # We don't want any root password for the rescue system
 EXTRA_USERS_PARAMS = "usermod -p '' root;"
